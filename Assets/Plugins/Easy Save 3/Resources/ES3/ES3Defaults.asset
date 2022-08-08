@@ -38,10 +38,13 @@ MonoBehaviour:
     - Sirenix.OdinInspector.CompatibilityLayer
     - IngameDebugConsole.Runtime
     - DOTween.Modules
+    - Zenject
+    - Zenject-IntegrationTests
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Tayx.Graphy.Editor
     - IngameDebugConsole.Editor
     - DOTweenPro.EditorScripts
+    - Zenject-TestFramework
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

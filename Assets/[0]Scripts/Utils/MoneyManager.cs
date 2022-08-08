@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-public class MoneyManager : Singleton<MoneyManager>
+public class MoneyManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI moneyLable;
     private float _money = 0;

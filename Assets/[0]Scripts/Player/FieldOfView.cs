@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(Renderer))]
@@ -11,6 +12,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private float fieldOfViewDistance;
     [SerializeField] private float fieldOfViewAngle;
     [SerializeField] private int raysCount;
+    [Range(0f, 1f)] [SerializeField] private float fadeColor = 0.3f;
     
     private MeshFilter _meshFilter;
     private Renderer _fieldOfViewRenderer;
@@ -19,7 +21,8 @@ public class FieldOfView : MonoBehaviour
     private MaterialPropertyBlock _materialPropertyBlock;
     private Color _originalMaterialColor;
 
-    private void Awake()
+    [Inject]
+    private void Construct()
     {
         _meshFilter = GetComponent<MeshFilter>();
         _fieldOfViewRenderer = GetComponent<Renderer>();
@@ -52,7 +55,7 @@ public class FieldOfView : MonoBehaviour
     [Button]
     public void ShowFieldOfView()
     {
-        _originalMaterialColor.a = 0.65f;
+        _originalMaterialColor.a = fadeColor;
         
         _fieldOfViewRenderer.GetPropertyBlock(_materialPropertyBlock);
         _materialPropertyBlock.SetColor("_Color", _originalMaterialColor);
@@ -72,6 +75,8 @@ public class FieldOfView : MonoBehaviour
     
     private void DrawFieldOfView()
     {
+        _mesh.Clear();
+        
         var origin = Vector3.zero;
         var currentAngle = -1 * (fieldOfViewAngle / 2);
         var angleIncrease = fieldOfViewAngle / raysCount;

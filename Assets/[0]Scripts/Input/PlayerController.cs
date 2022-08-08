@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterData))]
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private ParticleSystem moveParticles;
 
-    private SimpleJoystick _joystick => SimpleJoystick.Instance;
+    private SimpleJoystick _joystick;
 
     private Rigidbody _rigidbody;
     private CharacterData _playerData;
@@ -26,14 +27,16 @@ public class PlayerController : MonoBehaviour
     private readonly int Movement = Animator.StringToHash("Movement");
     private readonly int ObjectsInHands = Animator.StringToHash("ObjectsInHands");
 
-    private void Awake()
+    [Inject]
+    private void Construct()
     {
+        _joystick = SimpleJoystick.Instance;
         _playerData = GetComponent<CharacterData>();
         _rigidbody = GetComponent<Rigidbody>();
         _objectsHolder = GetComponent<ObjectsHolder>();
         _audioSource = GetComponent<AudioSource>();
     }
-
+    
     private void Start()
     {
         _objectsHolder.SetCharacterData(_playerData);
