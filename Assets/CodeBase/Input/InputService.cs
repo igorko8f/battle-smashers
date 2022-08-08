@@ -11,7 +11,11 @@ namespace CodeBase.Input
         public abstract Vector3 GetAxis { get; }
 
         public event Action OnPlayerAttack;
-        
+        public void PlayerAttacked()
+        {
+            OnPlayerAttack?.Invoke();
+        }
+
         protected Vector3 JoystickAxis()
         {
             return new Vector3(SimpleJoystick.Instance.Horizontal(), 0f, SimpleJoystick.Instance.Vertical());

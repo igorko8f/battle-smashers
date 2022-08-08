@@ -1,31 +1,40 @@
 ﻿using System;
+using CodeBase.Input;
 using CodeBase.Utils;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class SimpleJoystick : Singleton<SimpleJoystick>
 {
     [SerializeField] private Image joystickImage;
-    [SerializeField] private float joystickMovementSpeed = 5f;
-    [SerializeField] private float joysticPaddingOffset = 1;
+    [SerializeField] private float joystickMovementSpeed = 500f;
+    [SerializeField] private float joystickPaddingOffset = 2;
     [SerializeField] private bool showWhenPressed;
     
     public bool ChangePLayerSpeed = false;
-    
+
+    private IInputService _inputService;
     
     private Image _backgroundImage;
     private CanvasGroup _canvasGroup;
+    
     private Vector3 _inputVector;
+    
     private bool _moveJoystick = false;
     private bool _controlling = false;
-    private PointerEventData _lastPointerData;
+    
     private float _maximumMagnitude = 0f;
+    
+    private PointerEventData _lastPointerData;
 
-    private void Awake()
+    [Inject]
+    private void Construct(IInputService inputService)
     {
+        _inputService = inputService;
         _backgroundImage = GetComponent<Image>();
         _canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -35,7 +44,7 @@ public class SimpleJoystick : Singleton<SimpleJoystick>
         var width = _backgroundImage.rectTransform.rect.width;
         var height = _backgroundImage.rectTransform.rect.height;
         
-        _maximumMagnitude = (new Vector3(width/joysticPaddingOffset,height / joysticPaddingOffset , 0).magnitude) / 2f;
+        _maximumMagnitude = (new Vector3(width/joystickPaddingOffset,height / joystickPaddingOffset , 0).magnitude) / 2f;
     }
 
     private void Update()
@@ -79,7 +88,7 @@ public class SimpleJoystick : Singleton<SimpleJoystick>
         _inputVector = new Vector3(pos.x * 2, 0, pos.y * 2);
         _inputVector = _inputVector.magnitude > 1f ? _inputVector.normalized : _inputVector;
 
-        joystickREct.anchoredPosition = new Vector3(_inputVector.x * (width / joysticPaddingOffset), _inputVector.z * (height / joysticPaddingOffset));
+        joystickREct.anchoredPosition = new Vector3(_inputVector.x * (width / joystickPaddingOffset), _inputVector.z * (height / joystickPaddingOffset));
         _lastPointerData = eventData;
     }
 
@@ -90,6 +99,8 @@ public class SimpleJoystick : Singleton<SimpleJoystick>
         _inputVector = Vector3.zero;
         joystickImage.rectTransform.anchoredPosition = Vector3.zero;
         _controlling = false;
+
+        _inputService.PlayerAttacked();
     }
     
     public float Horizontal()

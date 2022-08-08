@@ -9,5 +9,7 @@ namespace CodeBase.Input
         bool ChangePlayerSpeed { get; }
         Vector3 GetAxis { get; }
         event Action OnPlayerAttack;
+
+        void PlayerAttacked();
     }
 }

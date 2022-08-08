@@ -1,3 +1,4 @@
+using System;
 using CodeBase.Input;
 using UnityEngine;
 using Zenject;
@@ -40,6 +41,13 @@ namespace CodeBase.Player
         {
             _objectsHolder.SetCharacterData(_playerData);
             _initialRotation = transform.localEulerAngles;
+            
+            _inputService.OnPlayerAttack += Attack;
+        }
+
+        private void OnDisable()
+        {
+            _inputService.OnPlayerAttack -= Attack;
         }
 
         private void FixedUpdate()
@@ -86,6 +94,11 @@ namespace CodeBase.Player
         {
             var positionToMove = _rigidbody.position + (transform.forward * magnitude * _playerData.MovementSpeed * Time.fixedDeltaTime);
             _rigidbody.MovePosition(positionToMove);
+        }
+
+        private void Attack()
+        {
+            
         }
     }
 }

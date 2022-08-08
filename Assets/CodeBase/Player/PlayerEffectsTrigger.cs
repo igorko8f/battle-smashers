@@ -7,7 +7,7 @@ namespace CodeBase.Player
         [SerializeField] private ParticleSystem moveParticles;
         [SerializeField] private AudioSource audioSource;
         
-        public void PlayEffects()
+        public virtual void PlayEffects()
         {
             if (moveParticles.isPlaying == false || moveParticles.isEmitting == false)
             {
@@ -16,7 +16,7 @@ namespace CodeBase.Player
             }
         }
 
-        public void StopEffects()
+        public virtual void StopEffects()
         {
             if (moveParticles.isPlaying || moveParticles.isEmitting)
             {
