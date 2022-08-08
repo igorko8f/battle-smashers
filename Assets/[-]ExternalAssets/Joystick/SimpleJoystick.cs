@@ -1,6 +1,6 @@
 ﻿using System;
+using CodeBase.Utils;
 using DG.Tweening;
-using Project.Internal;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

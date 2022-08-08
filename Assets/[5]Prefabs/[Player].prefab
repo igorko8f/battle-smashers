@@ -4890,6 +4890,8 @@ GameObject:
   - component: {fileID: 206153287647586305}
   - component: {fileID: 206153287647586304}
   - component: {fileID: 7097252693302193995}
+  - component: {fileID: 2846510930398602802}
+  - component: {fileID: 2578363521159016176}
   m_Layer: 6
   m_Name: '[Player]'
   m_TagString: Untagged
@@ -5054,8 +5056,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fd573c0900b3240b02d7812b7ea1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 3362930031896935142}
-  moveParticles: {fileID: 5259679037825467204}
 --- !u!114 &206153287647586304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5095,6 +5095,33 @@ MonoBehaviour:
   showCurrentObjectsCount: 0
   changeTextPosition: 1
   isPlayer: 1
+--- !u!114 &2846510930398602802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206153287647586333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a606a0430c43b99c58cd2566a9b136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 3362930031896935142}
+--- !u!114 &2578363521159016176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206153287647586333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d00aaa930734b248ab6bd7172967f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveParticles: {fileID: 5259679037825467204}
+  audioSource: {fileID: 2895204894221638403}
 --- !u!1 &956420306114569837
 GameObject:
   m_ObjectHideFlags: 0
@@ -5225,6 +5252,7 @@ MonoBehaviour:
   fieldOfViewDistance: 1
   fieldOfViewAngle: 80
   raysCount: 5
+  fadeColor: 0.3
 --- !u!1 &4551191430024480251
 GameObject:
   m_ObjectHideFlags: 0
@@ -5355,6 +5383,7 @@ MonoBehaviour:
   fieldOfViewDistance: 3
   fieldOfViewAngle: 90
   raysCount: 20
+  fadeColor: 0.3
 --- !u!1 &8968887147343431397
 GameObject:
   m_ObjectHideFlags: 0
