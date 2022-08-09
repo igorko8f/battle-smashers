@@ -29,22 +29,22 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Assembly-CSharp
+    - Zenject
     - DOTweenPro.Scripts
     - Assembly-CSharp-firstpass
     - Cinemachine
+    - Zenject-IntegrationTests
     - Tayx.Graphy
-    - Assembly-CSharp
     - Purchasing.Common
     - Sirenix.OdinInspector.CompatibilityLayer
     - IngameDebugConsole.Runtime
     - DOTween.Modules
-    - Zenject
-    - Zenject-IntegrationTests
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Tayx.Graphy.Editor
+    - Zenject-TestFramework
     - IngameDebugConsole.Editor
     - DOTweenPro.EditorScripts
-    - Zenject-TestFramework
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

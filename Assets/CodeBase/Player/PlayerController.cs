@@ -7,9 +7,9 @@ namespace CodeBase.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CharacterData))]
-    [RequireComponent(typeof(ObjectsHolder))]
     [RequireComponent(typeof(PlayerAnimationTrigger))]
     [RequireComponent(typeof(PlayerEffectsTrigger))]
+    [RequireComponent(typeof(PlayerWeaponsHolder))]
 
     public class PlayerController : MonoBehaviour
     { 
@@ -17,13 +17,12 @@ namespace CodeBase.Player
 
         private PlayerEffectsTrigger _playerEffectsTrigger;
         private PlayerAnimationTrigger _playerAnimationTrigger;
+        private PlayerWeaponsHolder _playerWeaponsHolder;
         
         private Rigidbody _rigidbody;
         private CharacterData _playerData;
-        private ObjectsHolder _objectsHolder;
-    
-        private Vector3 _initialRotation;
 
+        private Vector3 _initialRotation;
         private bool _blockInput = false;
 
         [Inject]
@@ -32,16 +31,17 @@ namespace CodeBase.Player
             _inputService = inputService;
             _playerData = GetComponent<CharacterData>();
             _rigidbody = GetComponent<Rigidbody>();
-            _objectsHolder = GetComponent<ObjectsHolder>();
+            
             _playerEffectsTrigger = GetComponent<PlayerEffectsTrigger>();
             _playerAnimationTrigger = GetComponent<PlayerAnimationTrigger>();
+            _playerWeaponsHolder = GetComponent<PlayerWeaponsHolder>();
+            
+            _playerWeaponsHolder.Initialize(_playerAnimationTrigger);
         }
     
         private void Start()
         {
-            _objectsHolder.SetCharacterData(_playerData);
             _initialRotation = transform.localEulerAngles;
-            
             _inputService.OnPlayerAttack += Attack;
         }
 

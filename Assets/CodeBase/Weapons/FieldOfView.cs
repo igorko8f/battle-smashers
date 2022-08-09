@@ -2,20 +2,22 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Player
+namespace CodeBase.Weapons
 {
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(Renderer))]
     public class FieldOfView : MonoBehaviour
     {
-        [SerializeField] private float fieldOfViewDistance;
-        [SerializeField] private float fieldOfViewAngle;
         [SerializeField] private int raysCount;
         [Range(0f, 1f)] [SerializeField] private float fadeColor = 0.3f;
-    
-        private MeshFilter _meshFilter;
+
+        protected Mesh Mesh;
+        protected MeshFilter MeshFilter;
+        
+        protected float FieldOfViewDistance;
+        protected float FieldOfViewAngle;
+        
         private Renderer _fieldOfViewRenderer;
-        private Mesh _mesh;
 
         private MaterialPropertyBlock _materialPropertyBlock;
         private Color _originalMaterialColor;
@@ -23,14 +25,21 @@ namespace CodeBase.Player
         [Inject]
         private void Construct()
         {
-            _meshFilter = GetComponent<MeshFilter>();
             _fieldOfViewRenderer = GetComponent<Renderer>();
-            _mesh = new Mesh();
+            
+            MeshFilter = GetComponent<MeshFilter>();
+            Mesh = new Mesh();
+            
             _materialPropertyBlock = new MaterialPropertyBlock();
-        
             _originalMaterialColor = _fieldOfViewRenderer.material.color;
         }
-    
+
+        public void InitializeFOVParameters(float distance, float angle)
+        {
+            FieldOfViewAngle = angle;
+            FieldOfViewDistance = distance;
+        }
+
         private void Start()
         {
             DrawFieldOfView();
@@ -39,16 +48,16 @@ namespace CodeBase.Player
 
         public bool IsPositionInTheFieldOfView(Vector3 targetPosition)
         {
-            if (Vector3.Distance(transform.position, targetPosition) <= fieldOfViewDistance)
+            if (Vector3.Distance(transform.position, targetPosition) <= FieldOfViewDistance)
             {
                 var direction = (targetPosition - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, direction) < fieldOfViewAngle / 2f)
+                if (Vector3.Angle(transform.forward, direction) < FieldOfViewAngle / 2f)
                 {
                     return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
         [Button]
@@ -72,13 +81,14 @@ namespace CodeBase.Player
             _fieldOfViewRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
     
-        private void DrawFieldOfView()
+        [Button]
+        protected virtual void DrawFieldOfView()
         {
-            _mesh.Clear();
-        
+            Mesh.Clear();
+            
             var origin = Vector3.zero;
-            var currentAngle = -1 * (fieldOfViewAngle / 2);
-            var angleIncrease = fieldOfViewAngle / raysCount;
+            var currentAngle = -1 * (FieldOfViewAngle / 2);
+            var angleIncrease = FieldOfViewAngle / raysCount;
 
             var vertices = new Vector3[raysCount + 1 + 1];
             var uv = new Vector2[vertices.Length];
@@ -91,7 +101,7 @@ namespace CodeBase.Player
 
             for (int i = 0; i <= raysCount; i++)
             {
-                var vertex = origin + GetVectorFromAngle(currentAngle) * fieldOfViewDistance;
+                var vertex = origin + GetVectorFromAngle(currentAngle) * FieldOfViewDistance;
                 vertices[vertexIndex] = vertex;
 
                 if (i > 0)
@@ -107,11 +117,11 @@ namespace CodeBase.Player
                 currentAngle += angleIncrease;
             }
 
-            _mesh.vertices = vertices;
-            _mesh.uv = uv;
-            _mesh.triangles = triangles;
+            Mesh.vertices = vertices;
+            Mesh.uv = uv;
+            Mesh.triangles = triangles;
 
-            _meshFilter.mesh = _mesh;
+            MeshFilter.mesh = Mesh;
         }
 
         private Vector3 GetVectorFromAngle(float angle)
