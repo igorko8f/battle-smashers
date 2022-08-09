@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e196ea3ad2f4b8ba908de51b0152fd5, type: 3}
   m_Name: Flare
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 2
   Bullet: {fileID: 0}
   Distance: 4
   Angle: 1

@@ -8,8 +8,6 @@ namespace CodeBase.Weapons
         [Button]
         protected override void DrawFieldOfView()
         {
-            Mesh.Clear();
-            
             var meshOriginPosition = Vector3.zero;
             meshOriginPosition.x -= FieldOfViewAngle / 2;
             

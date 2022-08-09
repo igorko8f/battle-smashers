@@ -21,9 +21,8 @@ namespace CodeBase.Weapons
 
         private MaterialPropertyBlock _materialPropertyBlock;
         private Color _originalMaterialColor;
-
-        [Inject]
-        private void Construct()
+        
+        public void Initialize(float distance, float angle)
         {
             _fieldOfViewRenderer = GetComponent<Renderer>();
             
@@ -32,10 +31,7 @@ namespace CodeBase.Weapons
             
             _materialPropertyBlock = new MaterialPropertyBlock();
             _originalMaterialColor = _fieldOfViewRenderer.material.color;
-        }
-
-        public void InitializeFOVParameters(float distance, float angle)
-        {
+            
             FieldOfViewAngle = angle;
             FieldOfViewDistance = distance;
         }
@@ -84,8 +80,6 @@ namespace CodeBase.Weapons
         [Button]
         protected virtual void DrawFieldOfView()
         {
-            Mesh.Clear();
-            
             var origin = Vector3.zero;
             var currentAngle = -1 * (FieldOfViewAngle / 2);
             var angleIncrease = FieldOfViewAngle / raysCount;

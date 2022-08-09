@@ -4,7 +4,7 @@
     {
         public override void Shot()
         {
-            
+            print("Distance SHOT!");
         }
     }
 }

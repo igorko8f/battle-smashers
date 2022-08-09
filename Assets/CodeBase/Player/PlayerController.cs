@@ -1,5 +1,5 @@
-using System;
 using CodeBase.Input;
+using CodeBase.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -60,6 +60,11 @@ namespace CodeBase.Player
             Move();
         }
 
+        public void CollectWeapon(Weapon weapon)
+        {
+            _playerWeaponsHolder.CollectWeapon(weapon);
+        }
+        
         private void Move()
         {
             var axis = _inputService.GetAxis;
@@ -98,7 +103,7 @@ namespace CodeBase.Player
 
         private void Attack()
         {
-            
+            _playerWeaponsHolder.Shot();
         }
     }
 }

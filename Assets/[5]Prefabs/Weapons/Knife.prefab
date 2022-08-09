@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6754487844241950792}
-  - component: {fileID: 6754487844241950793}
+  - component: {fileID: 2431460440702571423}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6754487844241950793
+--- !u!114 &2431460440702571423
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6754487844241950799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e5eb904cd34d26b39cc3a370c57f83, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c6f6dfbafaa413998554960592fd787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   property: {fileID: 11400000, guid: 8489832e2102e604f9809ecff1924d20, type: 2}

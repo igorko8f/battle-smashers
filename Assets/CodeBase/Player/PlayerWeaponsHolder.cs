@@ -19,20 +19,37 @@ namespace CodeBase.Player
         
         public void ClearWeapon()
         {
+            _currentWeapon.ClearFieldOfView();
+            
             Destroy(_currentWeapon.gameObject);
             _playerAnimationTrigger.UnEquipWeapon();
         }
 
         public void CollectWeapon(Weapon weapon)
         {
+            if(_currentWeapon != null)
+                ClearWeapon();
+            
             _currentWeapon = weapon;
+            _currentWeapon.SetupFieldOfView(transform);
 
             var weaponParent = GetWeaponPositionByType(_currentWeapon.Type);
             _currentWeapon.transform.SetParent(weaponParent);
-            
+            _currentWeapon.transform.ResetChildLocalTransform();
+
             _playerAnimationTrigger.EquipWeapon(_currentWeapon.Type);
         }
 
+        public void Shot()
+        {
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Shot();
+                _playerAnimationTrigger.Attack();
+            }
+                
+        }
+        
         private Transform GetWeaponPositionByType(WeaponType type)
         {
             foreach (var weaponPosition in weaponPositions)

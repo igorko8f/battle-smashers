@@ -26,9 +26,9 @@ namespace CodeBase.Player
             playerAnimator.SetInteger(_weaponEquip, 0);
         }
 
-        public virtual void Attack(WeaponType weaponType)
+        public virtual void Attack()
         {
-            playerAnimator.SetInteger(_attack, (int)weaponType);
+            playerAnimator.SetTrigger(_attack);
         }
     }
 }
