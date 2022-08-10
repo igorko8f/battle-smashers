@@ -80,6 +80,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: {fileID: 11400000, guid: 8489832e2102e604f9809ecff1924d20, type: 2}
   fieldOfView: {fileID: 6070925446545951826}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!1 &6754487844635304317
 GameObject:
   m_ObjectHideFlags: 0

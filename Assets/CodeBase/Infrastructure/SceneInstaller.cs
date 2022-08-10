@@ -1,5 +1,6 @@
 ﻿using CodeBase.Player;
 using CodeBase.Utils;
+using CodeBase.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -10,13 +11,23 @@ namespace CodeBase.Infrastructure
         public Transform PlayerPosition;
         public PlayerController PlayerPrefab;
         public MoneyManager MoneyManager;
+        public LootSpawner LootSpawner;
 
         public override void InstallBindings()
         {
             BindPlayer();
             BindMoneyManager();
+            BindLootSpawner();
         }
-        
+
+        private void BindLootSpawner()
+        {
+            Container
+                .Bind<LootSpawner>()
+                .FromInstance(LootSpawner)
+                .AsSingle();
+        }
+
         private void BindMoneyManager()
         {
             Container

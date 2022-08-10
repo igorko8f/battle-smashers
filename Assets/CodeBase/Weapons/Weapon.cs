@@ -1,3 +1,4 @@
+using CodeBase.Enemies;
 using CodeBase.Player;
 using CodeBase.Utils;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace CodeBase.Weapons
         public WeaponProperty property;
         
         [SerializeField] private FieldOfView fieldOfView;
+        [SerializeField] private LayerMask enemyLayers;
 
         private PlayerController _playerController;
 
@@ -25,6 +27,10 @@ namespace CodeBase.Weapons
             {
                 player.CollectWeapon(this);
             }
+            else if (to.TryGetComponent(out EnemyAI enemy))
+            {
+                enemy.CollectWeapon(this);
+            }
         }
 
         public void SetupFieldOfView(Transform parent)
@@ -39,8 +45,22 @@ namespace CodeBase.Weapons
             Destroy(fieldOfView.gameObject);
         }
         
-        public virtual void Shot()
+        public virtual void Shot(IAttackable self)
         {
+            var enemies = Physics.OverlapSphere(transform.position, property.Distance, enemyLayers);
+            foreach (var enemy in enemies)
+            {
+                if (enemy.TryGetComponent(out IAttackable attackable))
+                {
+                    if (self == attackable)
+                    {
+                        continue;
+                    }
+                    
+                    if(fieldOfView.IsPositionInTheFieldOfView(enemy.transform.position))
+                        attackable.Hit();
+                }
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ namespace CodeBase.Weapons
             HideFieldOfView();
         }
 
-        public bool IsPositionInTheFieldOfView(Vector3 targetPosition)
+        public virtual bool IsPositionInTheFieldOfView(Vector3 targetPosition)
         {
             if (Vector3.Distance(transform.position, targetPosition) <= FieldOfViewDistance)
             {

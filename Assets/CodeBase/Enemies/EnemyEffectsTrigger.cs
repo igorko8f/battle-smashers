@@ -2,7 +2,7 @@
 
 namespace CodeBase.Enemies
 {
-    public class EnemyEffectsTrigger : PlayerEffectsTrigger
+    public class EnemyEffectsTrigger : EffectsTrigger
     {
         
     }

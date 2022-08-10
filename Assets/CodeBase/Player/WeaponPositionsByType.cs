@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Player
 {
-    public partial class PlayerWeaponsHolder
+    public partial class WeaponsHolder
     {
         [System.Serializable]
         private struct WeaponPositionsByType

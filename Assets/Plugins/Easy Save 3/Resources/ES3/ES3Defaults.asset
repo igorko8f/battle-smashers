@@ -40,11 +40,14 @@ MonoBehaviour:
     - Sirenix.OdinInspector.CompatibilityLayer
     - IngameDebugConsole.Runtime
     - DOTween.Modules
+    - AstarPathfindingProject
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Tayx.Graphy.Editor
     - Zenject-TestFramework
     - IngameDebugConsole.Editor
     - DOTweenPro.EditorScripts
+    - AstarPathfindingProjectEditor
+    - PackageToolsEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

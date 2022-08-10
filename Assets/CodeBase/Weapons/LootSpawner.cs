@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 namespace CodeBase.Weapons
 {
@@ -26,13 +29,16 @@ namespace CodeBase.Weapons
             ClearEvents();
         }
 
-        //temporary
-        public void Start()
+        public void SpawnInitialLoot(int lootCount)
         {
+            for (int i = 0; i < lootCount; i++)
+            {
+                SpawnRandomLoot();
+            }
+            
             StartSpawnLoop();
         }
-
-
+        
         public void StartSpawnLoop()
         {
             if (_spawnLoopRoutine != null)
@@ -67,6 +73,24 @@ namespace CodeBase.Weapons
         public void RemoveLootCollectable(LootCollectable collectable)
         {
             _spawnedLoot.Remove(collectable);
+        }
+
+        public Transform GetNearestLoot(Vector3 enemyPosition)
+        {
+            var min = float.MaxValue;
+            Transform loot = null;
+            
+            foreach (var lootCollectable in _spawnedLoot)
+            {
+                var distance = Vector3.Distance(enemyPosition, lootCollectable.transform.position);
+                if (distance < min)
+                {
+                    min = distance;
+                    loot = lootCollectable.transform;
+                }
+            }
+
+            return loot;
         }
 
         private void SpawnRandomLoot()

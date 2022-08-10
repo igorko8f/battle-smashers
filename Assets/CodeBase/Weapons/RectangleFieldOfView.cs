@@ -5,6 +5,9 @@ namespace CodeBase.Weapons
 {
     public class RectangleFieldOfView : FieldOfView
     {
+        [SerializeField] private Transform minZonePosition;
+        [SerializeField] private Transform maxZonePosition;
+        
         [Button]
         protected override void DrawFieldOfView()
         {
@@ -23,6 +26,9 @@ namespace CodeBase.Weapons
             position11.x += FieldOfViewAngle;
             position11.z += FieldOfViewDistance;
 
+            minZonePosition.localPosition = position00;
+            maxZonePosition.localPosition = position11;
+            
             var vertices = new Vector3[]
             {
                 position00,
@@ -44,6 +50,22 @@ namespace CodeBase.Weapons
             Mesh.triangles = triangles;
 
             MeshFilter.mesh = Mesh;
+        }
+
+        public override bool IsPositionInTheFieldOfView(Vector3 targetPosition)
+        {
+            if (Vector3.Distance(transform.position, targetPosition) <= FieldOfViewDistance)
+            {
+                if (targetPosition.x >= minZonePosition.position.x
+                    && targetPosition.x <= maxZonePosition.position.x
+                    && targetPosition.z >= minZonePosition.position.z
+                    && targetPosition.z <= maxZonePosition.position.z)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

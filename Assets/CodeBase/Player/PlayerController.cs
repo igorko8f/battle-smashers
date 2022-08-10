@@ -7,17 +7,17 @@ namespace CodeBase.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CharacterData))]
-    [RequireComponent(typeof(PlayerAnimationTrigger))]
-    [RequireComponent(typeof(PlayerEffectsTrigger))]
-    [RequireComponent(typeof(PlayerWeaponsHolder))]
+    [RequireComponent(typeof(AnimationTrigger))]
+    [RequireComponent(typeof(EffectsTrigger))]
+    [RequireComponent(typeof(WeaponsHolder))]
 
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IAttackable
     { 
         private IInputService _inputService;
 
-        private PlayerEffectsTrigger _playerEffectsTrigger;
-        private PlayerAnimationTrigger _playerAnimationTrigger;
-        private PlayerWeaponsHolder _playerWeaponsHolder;
+        private EffectsTrigger _effectsTrigger;
+        private AnimationTrigger _animationTrigger;
+        private WeaponsHolder _weaponsHolder;
         
         private Rigidbody _rigidbody;
         private CharacterData _playerData;
@@ -32,11 +32,11 @@ namespace CodeBase.Player
             _playerData = GetComponent<CharacterData>();
             _rigidbody = GetComponent<Rigidbody>();
             
-            _playerEffectsTrigger = GetComponent<PlayerEffectsTrigger>();
-            _playerAnimationTrigger = GetComponent<PlayerAnimationTrigger>();
-            _playerWeaponsHolder = GetComponent<PlayerWeaponsHolder>();
+            _effectsTrigger = GetComponent<EffectsTrigger>();
+            _animationTrigger = GetComponent<AnimationTrigger>();
+            _weaponsHolder = GetComponent<WeaponsHolder>();
             
-            _playerWeaponsHolder.Initialize(_playerAnimationTrigger);
+            _weaponsHolder.Initialize(_animationTrigger, this);
         }
     
         private void Start()
@@ -62,7 +62,7 @@ namespace CodeBase.Player
 
         public void CollectWeapon(Weapon weapon)
         {
-            _playerWeaponsHolder.CollectWeapon(weapon);
+            _weaponsHolder.CollectWeapon(weapon);
         }
         
         private void Move()
@@ -78,15 +78,15 @@ namespace CodeBase.Player
 
                 if (direction.magnitude > 0.1f)
                 {
-                    _playerEffectsTrigger.PlayEffects();
+                    _effectsTrigger.PlayEffects();
                 }
             }
             else
             {
-                _playerEffectsTrigger.StopEffects();
+                _effectsTrigger.StopEffects();
             }
         
-            _playerAnimationTrigger.Move(direction.magnitude);
+            _animationTrigger.Move(direction.magnitude);
         }
 
         private void RotateTowardsDirection(Vector3 direction)
@@ -103,7 +103,12 @@ namespace CodeBase.Player
 
         private void Attack()
         {
-            _playerWeaponsHolder.Shot();
+            _weaponsHolder.Shot();
+        }
+
+        public void Hit()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
